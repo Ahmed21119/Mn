@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام تسجيل الدخول والخروج</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <script src="https://unpkg.com/dexie@3/dist/dexie.js"></script>
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.autotable.min.js"></script>
+</head>
+<body>
+
+    <div class="card">
+        <h1>نظام تسجيل الدخول والخروج</h1>
+        <form id="recordForm">
+            <div>
+                <label for="personName">اسم الشخص</label>
+                <input type="text" id="personName" required>
+            </div>
+            <div>
+                <label for="nationalIdPassportNum">رقم الهوية / الجواز</label>
+                <input type="text" id="nationalIdPassportNum" required>
+            </div>
+            <div>
+                <label for="entryExitType">نوع العملية</label>
+                <select id="entryExitType">
+                    <option value="دخول">دخول</option>
+                    <option value="خروج">خروج</option>
+                </select>
+            </div>
+            <div>
+                <label for="purpose">الغرض</label>
+                <input type="text" id="purpose" required>
+            </div>
+            <div>
+                <label for="originDestination">جهة القدوم / الوجهة</label>
+                <input type="text" id="originDestination" required>
+            </div>
+            <div>
+                <label for="vehicleType">نوع المركبة</label>
+                <select id="vehicleType">
+                    <option value="">-- اختر النوع --</option>
+                    <option value="سيارة خاصة">سيارة خاصة</option>
+                    <option value="سيارة أجرة">سيارة أجرة</option>
+                    <option value="باص أجرة">باص أجرة</option>
+                    <option value="دراجه نارية">دراجه نارية</option>
+                    <option value="شاحنة">شاحنة</option>
+                </select>
+            </div>
+            <div>
+                <label for="vehiclePlateNum">رقم لوحة المركبة</label>
+                <input type="text" id="vehiclePlateNum">
+            </div>
+            <div class="image-upload-container">
+                <label for="frontImageInput" class="button image-button">تصوير الوجه الأمامي</label>
+                <input type="file" accept="image/*" id="frontImageInput" class="hidden-file-input">
+                <img id="frontImagePreview" class="image-preview">
+            </div>
+            <div class="image-upload-container">
+                <label for="backImageInput" class="button image-button">تصوير الوجه الخلفي</label>
+                <input type="file" accept="image/*" id="backImageInput" class="hidden-file-input">
+                <img id="backImagePreview" class="image-preview">
+            </div>
+            <div style="grid-column: 1 / -1;">
+                <label for="notes">ملاحظات</label>
+                <textarea id="notes" rows="3"></textarea>
+            </div>
+            <button type="submit">تسجيل العملية</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>السجلات والتقارير</h2>
+        <div class="filter-section">
+            <input type="text" id="searchTerm" placeholder="ابحث بالاسم، الهوية، إلخ...">
+            <select id="filterType">
+                <option value="all">الكل (دخول/خروج)</option>
+                <option value="دخول">دخول فقط</option>
+                <option value="خروج">خروج فقط</option>
+            </select>
+            <input type="date" id="filterStartDate">
+            <input type="date" id="filterEndDate">
+        </div>
+        <div class="export-buttons">
+            <button id="exportExcelButton">تصدير Excel</button>
+            <button id="exportPdfButton">تصدير PDF</button>
+        </div>
+        <div class="table-container">
+            <table id="recordsTable">
+                <thead>
+                    <tr>
+                        <th>الاسم</th>
+                        <th>الهوية/الجواز</th>
+                        <th>النوع</th>
+                        <th>التاريخ والوقت</th>
+                        <th>الجهة</th>
+                        <th>اللوحة</th>
+                        <th>الصور</th>
+                    </tr>
+                </thead>
+                <tbody id="recordsTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="imageModal" class="modal">
+        <span class="modal-close">&times;</span>
+        <div class="modal-content">
+            <h2>الوجه الأمامي</h2>
+            <img id="modalImageFront">
+            <hr>
+            <h2>الوجه الخلفي</h2>
+            <img id="modalImageBack">
+        </div>
+    </div>
+
+    <script src="db.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

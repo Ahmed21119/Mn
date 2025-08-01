@@ -1,0 +1,32 @@
+const CACHE_NAME = 'sijilat-cache-v1';
+const urlsToCache = [
+  '/',
+  '/index.html',
+  '/style.css',
+  '/db.js',
+  '/main.js',
+  'https://unpkg.com/dexie@3/dist/dexie.js',
+  'https://unpkg.com/xlsx/dist/xlsx.full.min.js'
+];
+
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => {
+        console.log('Opened cache');
+        return cache.addAll(urlsToCache);
+      })
+  );
+});
+
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => {
+        if (response) {
+          return response;
+        }
+        return fetch(event.request);
+      })
+  );
+});

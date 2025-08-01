@@ -1,0 +1,103 @@
+/* style.css */
+/* ... (جميع التنسيقات السابقة تبقى كما هي) ... */
+
+body {
+    font-family: 'Tahoma', sans-serif;
+    direction: rtl;
+    background-color: #f0f4f8;
+    margin: 0;
+    padding: 20px;
+}
+.card {
+    background-color: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    width: 100%;
+    max-width: 900px;
+    margin: 15px auto;
+}
+h1, h2 { text-align: center; color: #0d47a1; }
+#recordForm { display: grid; grid-template-columns: 1fr; gap: 15px; }
+@media (min-width: 768px) { #recordForm { grid-template-columns: 1fr 1fr; } }
+label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
+input[type="text"], input[type="date"], select, textarea {
+    width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box;
+}
+button {
+    padding: 12px 20px; border: none; border-radius: 8px; color: white; font-size: 16px; cursor: pointer; transition: background-color 0.3s;
+}
+button[type="submit"] { background-color: #1976d2; grid-column: 1 / -1; justify-self: center; }
+.hidden-file-input { display: none; }
+.image-button { background-color: #546e7a; display: inline-block; text-align: center; }
+.image-upload-container { padding: 10px; text-align: center; border: 1px dashed #ccc; border-radius: 8px; }
+.image-preview { max-width: 150px; max-height: 100px; margin-top: 10px; border-radius: 4px; border: 1px solid #ddd; display: block; margin-left: auto; margin-right: auto; }
+#recordForm .image-upload-container { grid-column: 1 / -1; }
+@media (min-width: 768px) { #recordForm .image-upload-container { grid-column: auto; } }
+.table-container { overflow-x: auto; }
+#recordsTable { width: 100%; border-collapse: collapse; margin-top: 20px; }
+#recordsTable th, #recordsTable td { padding: 12px; text-align: right; border-bottom: 1px solid #ddd; }
+#recordsTable thead th { background-color: #0d47a1; color: white; }
+.view-button { background-color: #f57f17; padding: 5px 10px; font-size: 14px; }
+
+/* **جديد: تنسيقات الفلترة والتصدير** */
+.filter-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+.export-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+#exportExcelButton { background-color: #1b5e20; }
+#exportPdfButton { background-color: #b71c1c; }
+
+/* **جديد: تنسيقات النافذة المنبثقة للصور (Modal)** */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.7);
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 700px;
+    border-radius: 12px;
+    text-align: center;
+}
+.modal-close {
+    color: #aaa;
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    font-size: 40px;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+.modal-close:hover, .modal-close:focus {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+.modal-content img {
+    max-width: 100%;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
